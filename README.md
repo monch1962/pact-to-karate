@@ -13,6 +13,8 @@ Scripts to take Pact contracts as input and convert them to executable Karate te
 
 Assuming your Pact contracts are available in `./pacts`...
 
+---
+
 Sometimes Pact contracts are presented as invalid JSON due to a bug in the Pact broker - need to fix that...
 
 First install HJSON, a tool to fix broken JSONs
@@ -22,6 +24,8 @@ First install HJSON, a tool to fix broken JSONs
 Now use it to fix the broken pacts
 
 `$ fix-broken-json pacts/*.json`
+
+---
 
 Now convert your Pact contracts (with valid JSON) to Karate test cases
 
