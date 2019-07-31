@@ -1,0 +1,33 @@
+{
+  "consumer": {
+    "name": "billy"
+  },
+  "provider": {
+    "name": "bobby"
+  },
+  "interactions": [
+    {
+      "description": "My test",
+      "providerState": "User billy exists",
+      "request": {
+        "method": "POST",
+        "path": "/users/login",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "username":"billy",
+          "password":"issilly"
+        }
+      },
+      "response": {
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
