@@ -2,6 +2,8 @@
 
 Scripts to take Pact contracts as input and convert them to executable Karate test cases
 
+Note that this is only relevant for provider-side testing, where these test cases can be used to test the provider meets all the relevant consumer contracts. For consumer-side testing, you need to turn the Pact contracts into stub definitions to test the consumer code against a set of provider stubs.
+
 ## Assumptions
 
 - your execution environment is Linux
