@@ -7,9 +7,9 @@ Note that this is only relevant for provider-side testing, where these test case
 ## Assumptions
 
 - your execution environment is Linux
-- you have `jq` installed
+- you have recent version of `jq` installed
 - you have a bash shell
-- you either have access to the Internet to download `hjson`, or have `hjson` installed
+- you either have access to the Internet to download `hjson`, or have `hjson` already installed
 
 ## To use
 
@@ -34,3 +34,7 @@ Now convert your Pact contracts (with valid JSON) to Karate test cases
 `$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate.sh`
 
 The output should be an set of executable Karate test scenarios (for testing the provider of a consumer-provider pair), in a single feature file for each Pact contract JSON
+
+## To do
+
+Create a Dockerfile that can take a volume of Pact JSONs, turn them into Karate test cases and emit them in the same volume. This is likely to be a good fit for a CI+Docker/Kubernetes environment
