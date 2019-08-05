@@ -34,13 +34,14 @@ do
         jq --raw-output --argjson i "$I" '.interactions[$i].response.status')
 
     RESPONSE_BODY=$(echo $INPUT |
-        jq --raw-output --argjson i "$I" '.interactions[$i].response.body')
-    echo "Scenario: $DESCRIPTION"
-    echo "Given url '$URL'"
-    if [ "$REQUEST_BODY" != 'null' ]; then echo "And request $REQUEST_BODY"; fi
-    echo "When method $METHOD"
-    echo "Then status $STATUS"
-    if [ "$RESPONSE_BODY" != 'null' ]; then echo "And match response == $RESPONSE_BODY"; fi
+        jq --raw-output --argjson i "$I" '.interactions[$i].response.body') 
+
+    echo "  Scenario: $DESCRIPTION"
+    echo "    Given url '$URL'"
+    if [ "$REQUEST_BODY" != 'null' ]; then echo "    And request $REQUEST_BODY"; fi
+    echo "    When method $METHOD"
+    echo "    Then status $STATUS"
+    if [ "$RESPONSE_BODY" != 'null' ]; then echo "    And match response == $RESPONSE_BODY"; fi
     echo ""
 done
 

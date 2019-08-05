@@ -1,0 +1,55 @@
+{
+  "consumer": {
+    "name": "jsonplaceholder-consumer"
+  },
+  "provider": {
+    "name": "jsonplaceholder.typicode.com"
+  },
+  "interactions": [
+    {
+      "description": "All users",
+      "providerState": "User id 1 exists",
+      "request": {
+        "method": "GET",
+        "path": "/users",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": [{
+          "id":"#number",
+	  "name": "#string",
+          "phone":"#phone",
+	  "website": "#string"
+        }]
+      }
+    },
+    {
+      "description": "Single user",
+      "providerState": "User id 1 exists",
+      "request": {
+        "method": "GET",
+        "path": "/users/1",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id":"#number",
+	  "name": "#string",
+          "phone":"#phone",
+	  "website": "#string"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
