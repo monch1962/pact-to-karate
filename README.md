@@ -31,9 +31,15 @@ Now use it to fix the broken pacts
 
 Now convert your Pact contracts (with valid JSON) to Karate test cases
 
-`$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate.sh`
+`$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate-tests.sh`
 
 The output should be an set of executable Karate test scenarios (for testing the provider of a consumer-provider pair), in a single feature file for each Pact contract JSON
+
+---
+
+To create a corresponding set of Karate stubs from the same Pact contracts
+
+`$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate-stubs.sh`
 
 ## To do
 
