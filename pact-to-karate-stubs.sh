@@ -19,7 +19,6 @@ echo "  * configure cors = true"
 echo ""
 for INTERACTION in $(seq $NUM_INTERACTIONS)
 do
-    #echo $INTERACTION
     I="$(($INTERACTION - 1))"
     DESCRIPTION=$(echo $INPUT | 
         jq --raw-output --argjson i "$I" '.interactions[$i].description') 
@@ -39,13 +38,26 @@ do
     RESPONSE_BODY=$(echo $INPUT |
         jq -c --raw-output --argjson i "$I" '.interactions[$i].response.body') 
 
-    if [ "$REQUEST_BODY" != 'null' ]; then
-      echo "Scenario: pathMatches('${URL}') && methodIs('${METHOD}') && request(${REQUEST_BODY})"
+    REQUEST_BODY_MATCHERS=$(echo $INPUT |
+        jq --raw-output --argjson i "$I" '.interactions[$i].request.body |
+        . as $data | 
+        [path(.. | select(type != "object" and type != "array") )] | 
+        map( . as $path | map("[" + (. | tojson) + "]") | join("") | "request\(.) == \($data | getpath($path) | tojson)" ) | 
+        join(" && ")')
+
+    #echo $REQUEST_BODY_MATCHERS
+
+    if [ "$REQUEST_BODY_MATCHERS" != 'null' ]
+    then
+        echo "Scenario: pathMatches('${URL}') && methodIs('${METHOD}') && ${REQUEST_BODY_MATCHERS}"
+    else
+        echo "Scenario: pathMatches('${URL}') && methodIs('${METHOD}')"
     fi
+
     if [ "$RESPONSE_BODY" != 'null' ]; then echo "    * def response = $RESPONSE_BODY"; fi
     if [ "$STATUS" != 'null' ]; then echo "    * def responseStatus = $STATUS"; fi
     echo ""
 done
 
 echo "Scenario:"
-echo "    def responseStatus = 404"
+echo "    * def responseStatus = 404"
