@@ -63,20 +63,26 @@ type Pact struct {
 func convertToKarateStub(pact Pact) {
 	provider := pact.Provider
 	consumer := pact.Consumer
-	fmt.Printf("%s %s %s %s\n", "Feature: Provider", provider, "responding to consumer", consumer)
+	fmt.Printf("%s%s%s%s%s\n", "Feature: Provider '", provider.Name, "' responding to consumer '", consumer.Name, "'")
 	fmt.Println()
 	fmt.Println("Background:")
 	fmt.Println("  * configure cors = true")
-	fmt.Println()
-	for i := range pact.Interactions {
+
+	for _, d := range pact.Interactions {
 		// fmt.Println(d)
-		fmt.Printf("%s %s\n", "#", pact.Interactions[i].Description)
-		fmt.Printf("%s%s%s%s%s\n", "Scenario: pathMatches('", pact.Interactions[i].Request.Path, "') && methodIs('", pact.Interactions[i].Request.Method, "')")
-		if pact.Interactions[i].Response.Body != nil {
-			fmt.Printf("    * def response = %s\n", pact.Interactions[i].Response.Body)
+		fmt.Println()
+		fmt.Printf("%s %s\n", "#", d.Description)
+		fmt.Printf("%s%s%s%s%s\n", "Scenario: pathMatches('", d.Request.Path, "') && methodIs('", d.Request.Method, "')")
+		if d.Response.Body != nil {
+			m, err := json.Marshal(d.Response.Body)
+			if err == nil {
+				fmt.Printf("    * def response = %s\n", m)
+			} else {
+				fmt.Printf("    * def response = %s\n", d.Response.Body)
+			}
 		}
-		if pact.Interactions[i].Response.Status != 0 {
-			fmt.Printf("    * def responseStatus = %d\n", pact.Interactions[i].Response.Status)
+		if d.Response.Status != 0 {
+			fmt.Printf("    * def responseStatus = %d\n", d.Response.Status)
 		}
 	}
 	fmt.Println()
