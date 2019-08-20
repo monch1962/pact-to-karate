@@ -60,11 +60,37 @@ type Pact struct {
 	Metadata     Metadata      `json:"metadata"`
 }
 
+func convertToKarateStub(pact Pact) {
+	provider := pact.Provider
+	consumer := pact.Consumer
+	fmt.Printf("%s %s %s %s\n", "Feature: Provider", provider, "responding to consumer", consumer)
+	fmt.Println()
+	fmt.Println("Background:")
+	fmt.Println("  * configure cors = true")
+	fmt.Println()
+	for i := range pact.Interactions {
+		// fmt.Println(d)
+		fmt.Printf("%s %s\n", "#", pact.Interactions[i].Description)
+		fmt.Printf("%s%s%s%s%s\n", "Scenario: pathMatches('", pact.Interactions[i].Request.Path, "') && methodIs('", pact.Interactions[i].Request.Method, "')")
+		if pact.Interactions[i].Response.Body != nil {
+			fmt.Printf("    * def response = %s\n", pact.Interactions[i].Response.Body)
+		}
+		if pact.Interactions[i].Response.Status != 0 {
+			fmt.Printf("    * def responseStatus = %d\n", pact.Interactions[i].Response.Status)
+		}
+	}
+	fmt.Println()
+	fmt.Println("# No match found - default scenario is to return a 404")
+	fmt.Println("Scenario:")
+	fmt.Println("    * def responseStatus = 404")
+}
+
 func main() {
 	var pact Pact
 	err := json.NewDecoder(os.Stdin).Decode(&pact)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%v", pact)
+	fmt.Printf("%v\n", pact)
+	convertToKarateStub(pact)
 }
