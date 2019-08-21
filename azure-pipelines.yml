@@ -23,8 +23,15 @@ steps:
     go build -o main
   displayName: 'Build Go executable'
 
-- task: SonarCloudAnalyze@1
-
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+- script: |
+    export SONAR_SCANNER_VERSION=3.3.0.1492
+    export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION
+    rm -rf $SONAR_SCANNER_HOME
+    mkdir -p $SONAR_SCANNER_HOME
+    curl -sSLo $HOME/.sonar/sonar-scanner.zip http://repo1.maven.org/maven2/org/sonarsource/scanner/cli/sonar-scanner-cli/$SONAR_SCANNER_VERSION/sonar-scanner-cli-$SONAR_SCANNER_VERSION.zip
+    unzip $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+    rm $HOME/.sonar/sonar-scanner.zip
+    export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+    export SONAR_SCANNER_OPTS="-server"
+    ~/.sonar/sonar-scanner-3.3.0.1492/bin/sonar-scanner   -Dsonar.projectKey=pact-to-karate   -Dsonar.organization=monch1962-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=7b9b066b54ffcf4c4c22d0b89b38967a158d4f04 -Dsonar.scm.provider=git
+  displayName: 'Run SonarCloud checks'
