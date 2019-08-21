@@ -19,6 +19,7 @@ steps:
   displayName: 'Run Golang test suite'
 
 - script: |
+    cd golang/src
     go build -o main
   displayName: 'Build Go executable'
 
