@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 type Consumer struct {
@@ -60,6 +61,26 @@ type Pact struct {
 	Metadata     Metadata      `json:"metadata"`
 }
 
+func parseReqBodyJSON(content interface{}) []string {
+	var elements []string
+	json := content.(map[string]interface{})
+	for k, v := range json {
+		element := fmt.Sprintf("request[\"%v\"] == \"%v\"", k, v)
+		elements = append(elements, element)
+	}
+	return elements
+}
+
+func parseReqHeaders(content interface{}) []string {
+	var elements []string
+	json := content.(map[string]interface{})
+	for k, v := range json {
+		element := fmt.Sprintf("headerContains('%v', '%v')", k, v)
+		elements = append(elements, element)
+	}
+	return elements
+}
+
 func convertToKarateStub(pact Pact) {
 	provider := pact.Provider
 	consumer := pact.Consumer
@@ -72,7 +93,27 @@ func convertToKarateStub(pact Pact) {
 		// fmt.Println(d)
 		fmt.Println()
 		fmt.Printf("%s %s\n", "#", d.Description)
-		fmt.Printf("%s%s%s%s%s\n", "Scenario: pathMatches('", d.Request.Path, "') && methodIs('", d.Request.Method, "')")
+		fmt.Printf("%s%s%s%s%s", "Scenario: pathMatches('", d.Request.Path, "') && methodIs('", d.Request.Method, "')")
+
+		// fmt.Printf("Request.Headers: %s\n", d.Request.Headers)
+		reqHeaders := parseReqHeaders(d.Request.Headers)
+		if len(reqHeaders) != 0 {
+			fmt.Printf("%s", " && ")
+			reqH := strings.Join(reqHeaders, " && ")
+			fmt.Printf("%s", reqH)
+		}
+
+		reqBody := parseReqBodyJSON(d.Request.Body)
+		if len(reqBody) != 0 {
+			fmt.Printf("%s", " && ")
+			reqB := strings.Join(reqBody, " && ")
+			fmt.Printf("%s\n", reqB)
+		}
+		fmt.Println()
+
+		// fmt.Printf("Response.Headers: %s\n", d.Response.Headers)
+
+		// fmt.Printf("Response.Body: %s\n", d.Request.Body)
 		if d.Response.Body != nil {
 			m, err := json.Marshal(d.Response.Body)
 			if err == nil {
@@ -97,6 +138,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%v\n", pact)
+	// fmt.Printf("%v\n", pact)
 	convertToKarateStub(pact)
 }
