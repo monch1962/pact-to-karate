@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/monch1962/monch1962/_apis/build/status/monch1962.pact-to-karate?branchName=master)](https://dev.azure.com/monch1962/monch1962/_build/latest?definitionId=7&branchName=master)
 # pact-to-karate
 
 Code to take Pact contracts as input and convert them to executable Karate (consumer-side) test cases & (provider-side) stubs
@@ -37,6 +38,6 @@ Now use it to fix the broken pacts
 
 Now convert your Pact contracts (with valid JSON) to Karate test cases
 
-`$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate.sh`
+`$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate-tests.sh`
 
 The output should be an set of executable Karate test scenarios (for testing the provider of a consumer-provider pair), in a single feature file for each Pact contract JSON
