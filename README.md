@@ -1,4 +1,5 @@
 [![Build Status](https://dev.azure.com/monch1962/monch1962/_apis/build/status/monch1962.pact-to-karate?branchName=master)](https://dev.azure.com/monch1962/monch1962/_build/latest?definitionId=7&branchName=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=alert_status)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 # pact-to-karate
 
 Code to take Pact contracts as input and convert them to executable Karate (consumer-side) test cases & (provider-side) stubs
