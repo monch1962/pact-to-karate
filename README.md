@@ -8,13 +8,17 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 # pact-to-karate
 
-Code to take Pact contracts as input and convert them to executable Karate (consumer-side) test cases & (provider-side) stubs
+Code to take Pact contracts as input and convert them to executable Karate (consumer-side) test cases & (provider-side) stubs.
+
 There are 2 versions of this code: one to run as a Golang executable (optionally within a Docker container), and another to run in a bash+jq environment
 
 ## Golang version
 
 ### Assumptions
 Either you have a Go build environment to compile the executable, or a Docker environment which you can use to build a Docker image containing the Go executable
+
+### To use
+Check https://github.com/monch1962/pact-to-karate/blob/master/golang/src/README.md
 
 ## bash+jq version
 
