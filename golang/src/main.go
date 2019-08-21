@@ -43,7 +43,7 @@ type Request struct {
 
 type Response struct {
 	Status  int         `json:"status"`
-	Headers []Header    `json:"headers"`
+	Headers interface{}    `json:"headers"`
 	Body    interface{} `json:"body"`
 }
 
@@ -150,6 +150,11 @@ func convertToKarateStub(pact Pact) string {
 				fmt.Fprintf(&text, "    * def response = %s\n", d.Response.Body)
 			}
 		}
+        if d.Response.Headers != nil {
+            jsonH,_ := json.Marshal(d.Response.Headers)
+            fmt.Fprintf(&text, "    * def responseHeaders = %v\n", string(jsonH))
+        }
+
 		if d.Response.Status != 0 {
 			fmt.Fprintf(&text, "    * def responseStatus = %d\n", d.Response.Status)
 		}
