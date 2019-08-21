@@ -81,6 +81,31 @@ func parseReqHeaders(content interface{}) []string {
 	return elements
 }
 
+func convertToKarateTests(pact Pact) {
+	provider := pact.Provider
+	consumer := pact.Consumer
+	fmt.Printf("%s%s%s%s%s\n", "Feature: Consumer '", consumer.Name, "' sending requests to provider '", provider.Name, "'")
+	for _, d := range pact.Interactions {
+		fmt.Println()
+		fmt.Printf("  Scenario: %s\n", d.Description)
+		fmt.Printf("    Given URL '%s'\n", d.Request.Path)
+		if d.Request.Body != nil {
+			jsonString, err := json.Marshal(d.Request.Body)
+			if err == nil {
+				fmt.Printf("    And request %s\n", jsonString)
+			}
+		}
+		fmt.Printf("    When method %s\n", d.Request.Method)
+		fmt.Printf("    Then status %d\n", d.Response.Status)
+		if d.Response.Body != nil {
+			jsonString, err := json.Marshal(d.Response.Body)
+			if err == nil {
+				fmt.Printf("    And match response == %s\n", jsonString)
+			}
+		}
+	}
+}
+
 func convertToKarateStub(pact Pact) {
 	provider := pact.Provider
 	consumer := pact.Consumer
@@ -140,4 +165,6 @@ func main() {
 	}
 	// fmt.Printf("%v\n", pact)
 	convertToKarateStub(pact)
+	fmt.Println("==================================")
+	convertToKarateTests(pact)
 }
