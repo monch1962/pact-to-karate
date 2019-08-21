@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/monch1962/monch1962/_apis/build/status/monch1962.pact-to-karate?branchName=master)](https://dev.azure.com/monch1962/monch1962/_build/latest?definitionId=7&branchName=master)
 # pact-to-karate
 
 Scripts to take Pact contracts as input and convert them to executable Karate test cases
