@@ -139,9 +139,6 @@ func convertToKarateStub(pact Pact) string {
 		}
 		fmt.Fprintln(&text)
 
-		// fmt.Printf("Response.Headers: %s\n", d.Response.Headers)
-
-		// fmt.Printf("Response.Body: %s\n", d.Request.Body)
 		if d.Response.Body != nil {
 			m, err := json.Marshal(d.Response.Body)
 			if err == nil {
@@ -151,8 +148,10 @@ func convertToKarateStub(pact Pact) string {
 			}
 		}
         if d.Response.Headers != nil {
-            jsonH,_ := json.Marshal(d.Response.Headers)
-            fmt.Fprintf(&text, "    * def responseHeaders = %v\n", string(jsonH))
+            jsonH, err := json.Marshal(d.Response.Headers)
+            if err == nil {
+                fmt.Fprintf(&text, "    * def responseHeaders = %v\n", string(jsonH))
+            }
         }
 
 		if d.Response.Status != 0 {
