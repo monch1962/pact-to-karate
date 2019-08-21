@@ -15,7 +15,8 @@ steps:
 
 - script: |
     cd golang/src
-    go test
+    go test -json > test-report.out
+    go test -coverprofile=coverage.out
   displayName: 'Run Golang test suite'
 
 - script: |
