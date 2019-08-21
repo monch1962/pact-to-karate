@@ -81,60 +81,63 @@ func parseReqHeaders(content interface{}) []string {
 	return elements
 }
 
-func convertToKarateTests(pact Pact) {
+func convertToKarateTests(pact Pact) string {
+	var text strings.Builder
 	provider := pact.Provider
 	consumer := pact.Consumer
-	fmt.Printf("%s%s%s%s%s\n", "Feature: Consumer '", consumer.Name, "' sending requests to provider '", provider.Name, "'")
+	fmt.Fprintf(&text, "%s%s%s%s%s\n", "Feature: Consumer '", consumer.Name, "' sending requests to provider '", provider.Name, "'")
 	for _, d := range pact.Interactions {
-		fmt.Println()
-		fmt.Printf("  Scenario: %s\n", d.Description)
-		fmt.Printf("    Given URL '%s'\n", d.Request.Path)
+		fmt.Fprintln(&text)
+		fmt.Fprintf(&text, "  Scenario: %s\n", d.Description)
+		fmt.Fprintf(&text, "    Given URL '%s'\n", d.Request.Path)
 		if d.Request.Body != nil {
 			jsonString, err := json.Marshal(d.Request.Body)
 			if err == nil {
-				fmt.Printf("    And request %s\n", jsonString)
+				fmt.Fprintf(&text, "    And request %s\n", jsonString)
 			}
 		}
-		fmt.Printf("    When method %s\n", d.Request.Method)
-		fmt.Printf("    Then status %d\n", d.Response.Status)
+		fmt.Fprintf(&text, "    When method %s\n", d.Request.Method)
+		fmt.Fprintf(&text, "    Then status %d\n", d.Response.Status)
 		if d.Response.Body != nil {
 			jsonString, err := json.Marshal(d.Response.Body)
 			if err == nil {
-				fmt.Printf("    And match response == %s\n", jsonString)
+				fmt.Fprintf(&text, "    And match response == %s\n", jsonString)
 			}
 		}
 	}
+	return text.String()
 }
 
-func convertToKarateStub(pact Pact) {
+func convertToKarateStub(pact Pact) string {
+	var text strings.Builder
 	provider := pact.Provider
 	consumer := pact.Consumer
-	fmt.Printf("%s%s%s%s%s\n", "Feature: Provider '", provider.Name, "' responding to consumer '", consumer.Name, "'")
-	fmt.Println()
-	fmt.Println("Background:")
-	fmt.Println("  * configure cors = true")
+	fmt.Fprintf(&text, "%s%s%s%s%s\n", "Feature: Provider '", provider.Name, "' responding to consumer '", consumer.Name, "'")
+	fmt.Fprintln(&text)
+	fmt.Fprintln(&text, "Background:")
+	fmt.Fprintln(&text, "  * configure cors = true")
 
 	for _, d := range pact.Interactions {
 		// fmt.Println(d)
-		fmt.Println()
-		fmt.Printf("%s %s\n", "#", d.Description)
-		fmt.Printf("%s%s%s%s%s", "Scenario: pathMatches('", d.Request.Path, "') && methodIs('", d.Request.Method, "')")
+		fmt.Fprintln(&text)
+		fmt.Fprintf(&text, "%s %s\n", "#", d.Description)
+		fmt.Fprintf(&text, "%s%s%s%s%s", "Scenario: pathMatches('", d.Request.Path, "') && methodIs('", d.Request.Method, "')")
 
 		// fmt.Printf("Request.Headers: %s\n", d.Request.Headers)
 		reqHeaders := parseReqHeaders(d.Request.Headers)
 		if len(reqHeaders) != 0 {
-			fmt.Printf("%s", " && ")
+			fmt.Fprintf(&text, "%s", " && ")
 			reqH := strings.Join(reqHeaders, " && ")
-			fmt.Printf("%s", reqH)
+			fmt.Fprintf(&text, "%s", reqH)
 		}
 
 		reqBody := parseReqBodyJSON(d.Request.Body)
 		if len(reqBody) != 0 {
-			fmt.Printf("%s", " && ")
+			fmt.Fprintf(&text, "%s", " && ")
 			reqB := strings.Join(reqBody, " && ")
-			fmt.Printf("%s\n", reqB)
+			fmt.Fprintf(&text, "%s\n", reqB)
 		}
-		fmt.Println()
+		fmt.Fprintln(&text)
 
 		// fmt.Printf("Response.Headers: %s\n", d.Response.Headers)
 
@@ -142,19 +145,20 @@ func convertToKarateStub(pact Pact) {
 		if d.Response.Body != nil {
 			m, err := json.Marshal(d.Response.Body)
 			if err == nil {
-				fmt.Printf("    * def response = %s\n", m)
+				fmt.Fprintf(&text, "    * def response = %s\n", m)
 			} else {
-				fmt.Printf("    * def response = %s\n", d.Response.Body)
+				fmt.Fprintf(&text, "    * def response = %s\n", d.Response.Body)
 			}
 		}
 		if d.Response.Status != 0 {
-			fmt.Printf("    * def responseStatus = %d\n", d.Response.Status)
+			fmt.Fprintf(&text, "    * def responseStatus = %d\n", d.Response.Status)
 		}
 	}
-	fmt.Println()
-	fmt.Println("# No match found - default scenario is to return a 404")
-	fmt.Println("Scenario:")
-	fmt.Println("    * def responseStatus = 404")
+	fmt.Fprintln(&text)
+	fmt.Fprintln(&text, "# No match found - default scenario is to return a 404")
+	fmt.Fprintln(&text, "Scenario:")
+	fmt.Fprintln(&text, "    * def responseStatus = 404")
+	return text.String()
 }
 
 func main() {
@@ -164,7 +168,7 @@ func main() {
 		log.Fatal(err)
 	}
 	// fmt.Printf("%v\n", pact)
-	convertToKarateStub(pact)
+	fmt.Printf(convertToKarateStub(pact))
 	fmt.Println("==================================")
-	convertToKarateTests(pact)
+	fmt.Printf(convertToKarateTests(pact))
 }
