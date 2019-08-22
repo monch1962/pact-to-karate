@@ -100,6 +100,13 @@ func convertToKarateTests(pact Pact) string {
 				fmt.Fprintf(&text, "    And request %s\n", jsonString)
 			}
 		}
+		if d.Request.Headers != nil {
+			jsonString, err := json.Marshal(d.Request.Headers)
+			if err == nil {
+				fmt.Fprintf(&text, "    * def reqHeaders = %s\n", jsonString)
+				fmt.Fprintf(&text, "    * headers reqHeaders\n")
+			}
+		}
 		fmt.Fprintf(&text, "    When method %s\n", d.Request.Method)
 		fmt.Fprintf(&text, "    Then status %d\n", d.Response.Status)
 		if d.Response.Body != nil {
