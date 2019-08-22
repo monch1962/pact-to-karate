@@ -35,16 +35,20 @@ type Header struct {
 }
 
 type Request struct {
-	Method  string      `json:"method"`
-	Path    string      `json:"path"`
-	Headers interface{} `json:"headers"`
-	Body    interface{} `json:"body"`
+	Method        string      `json:"method"`
+	Path          string      `json:"path"`
+	Headers       interface{} `json:"headers"`
+	Query         interface{} `json:"query"`
+	Body          interface{} `json:"body"`
+	MatchingRules interface{} `json:"matchingRules"`
 }
 
 type Response struct {
-	Status  int         `json:"status"`
-	Headers interface{}    `json:"headers"`
-	Body    interface{} `json:"body"`
+	Status        int32       `json:"status"`
+	Headers       interface{} `json:"headers"`
+	Body          interface{} `json:"body"`
+	Generators    interface{} `json:"generators"`
+	MatchingRules interface{} `json:"matchingRules"`
 }
 
 type Interaction struct {
@@ -109,6 +113,7 @@ func convertToKarateTests(pact Pact) string {
 }
 
 func convertToKarateStub(pact Pact) string {
+	// log.Println("here")
 	var text strings.Builder
 	provider := pact.Provider
 	consumer := pact.Consumer
@@ -147,12 +152,12 @@ func convertToKarateStub(pact Pact) string {
 				fmt.Fprintf(&text, "    * def response = %s\n", d.Response.Body)
 			}
 		}
-        if d.Response.Headers != nil {
-            jsonH, err := json.Marshal(d.Response.Headers)
-            if err == nil {
-                fmt.Fprintf(&text, "    * def responseHeaders = %v\n", string(jsonH))
-            }
-        }
+		if d.Response.Headers != nil {
+			jsonH, err := json.Marshal(d.Response.Headers)
+			if err == nil {
+				fmt.Fprintf(&text, "    * def responseHeaders = %v\n", string(jsonH))
+			}
+		}
 
 		if d.Response.Status != 0 {
 			fmt.Fprintf(&text, "    * def responseStatus = %d\n", d.Response.Status)
@@ -172,7 +177,10 @@ func main() {
 		log.Fatal(err)
 	}
 	// fmt.Printf("%v\n", pact)
-	fmt.Printf(convertToKarateStub(pact))
-	fmt.Println("==================================")
-	fmt.Printf(convertToKarateTests(pact))
+	if os.Getenv("STUBS") != "" {
+		fmt.Printf(convertToKarateStub(pact))
+	}
+	if os.Getenv("TESTS") != "" {
+		fmt.Printf(convertToKarateTests(pact))
+	}
 }
