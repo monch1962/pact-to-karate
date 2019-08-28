@@ -1,4 +1,5 @@
 [![Build Status](https://dev.azure.com/monch1962/monch1962/_apis/build/status/monch1962.pact-to-karate?branchName=master)](https://dev.azure.com/monch1962/monch1962/_build/latest?definitionId=7&branchName=master)
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=alert_status)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=sqale_index)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=code_smells)](https://sonarcloud.io/dashboard?id=pact-to-karate)
@@ -6,6 +7,9 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=ncloc)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=security_rating)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=pact-to-karate)
+
+[![Actions Status](https://github.com/monch1962/pact-to-karate/workflows/Go/badge.svg)](https://github.com/monch1962/pact-to-karate/actions)
+
 # pact-to-karate
 
 Code to take Pact contracts as input and convert them to executable Karate (consumer-side) test cases & (provider-side) stubs.
