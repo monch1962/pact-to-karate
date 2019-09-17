@@ -35,11 +35,15 @@ type Header struct {
 	Value string `json:"value"`
 }
 
+type HeaderString struct {
+	Header string `json:"headerString"`
+}
+
 type Request struct {
 	Method        string      `json:"method"`
 	Path          string      `json:"path"`
 	Headers       interface{} `json:"headers"`
-	// Headers	[]Header `json:"headers"`
+	// Headers	[]HeaderString `json:"headers"`
 	Query         interface{} `json:"query"`
 	Body          interface{} `json:"body"`
 	MatchingRules interface{} `json:"matchingRules"`

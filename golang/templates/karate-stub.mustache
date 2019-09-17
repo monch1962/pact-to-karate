@@ -5,10 +5,10 @@ Background:
 
 {{#Interactions}}
 # {{Description}} ({{{ProviderState}}})
-Scenario: pathMatches('{{{Request.Path}}}') && methodIs('{{Request.Method}}') {{#Request.Headers}}&& headerContains({{.}}) {{/Request.Headers}}&& request["username"] == "billy" && request["hero"] == "map[something:goeshere]" && request["password"] == "issilly"
+Scenario: pathMatches('{{{Request.Path}}}') && methodIs('{{Request.Method}}') {{#Request.Headers}}&& headerContains({{{.}}}) {{/Request.Headers}}&& request["username"] == "billy" && request["hero"] == "map[something:goeshere]" && request["password"] == "issilly"
     {{#Response.Status}}* def responseStatus = {{.}}{{/Response.Status}}
-    {{#response.body}}* def response = {{.}}{{/response.body}}
-    {{#response.Headers}}* def responseHeaders = {{.}}{{/response.Headers}}
+    {{#Response.Body}}* def response = {{{.}}}{{/Response.Body}}
+    {{#Response.Headers}}* def responseHeaders = {{{.}}}{{/Response.Headers}}
 {{/Interactions}}
 
 # No match found - default scenario is to return a 404
