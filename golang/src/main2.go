@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"log"
 	"os"
+    "io/ioutil"
 	// "strings"
-	"github.com/alexkappa/mustache"
+	// "github.com/alexkappa/mustache"
+    "github.com/aymerick/raymond"
 )
 
 type Consumer struct {
@@ -77,22 +79,16 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%+v\n", pact)
-	// pactStr, err := json.MarshalIndent(pact, "", "  ")
-	// pactStr2 := map[string]interface{}(pactStr.(interface))
-	// fmt.Printf("%s\n", pactStr)
+	// fmt.Printf("%+v\n", pact)
 
-	templateFile := "../templates/" + os.Getenv("TEMPLATE") + ".mustache"
+	templateFile := "../templates/" + os.Getenv("TEMPLATE") + ".hbs"
 	f, err := os.Open(templateFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer f.Close()
 
-	t, err := mustache.Parse(f)
-	if err != nil {
-		log.Fatal(err)
-	}
-	t.Render(os.Stdout, pact)
-	// t.Render(os.Stdout, map[string]interface{}{"consumer": {"name": "billy"}})
+    template, err := ioutil.ReadAll(f)
+    result, err := raymond.Render(string(template), pact)
+    fmt.Println(result)
 }
