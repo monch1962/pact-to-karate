@@ -84,7 +84,7 @@ func main() {
 	templateFile := "../templates/" + os.Getenv("TEMPLATE") + ".hbs"
 	f, err := os.Open(templateFile)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal()
 	}
 	defer f.Close()
 
