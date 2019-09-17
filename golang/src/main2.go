@@ -88,6 +88,10 @@ func main() {
 	}
 	defer f.Close()
 
+    raymond.RegisterHelper("toJSON", func(body string) string {
+        return string(body)
+    })
+
     template, err := ioutil.ReadAll(f)
     result, err := raymond.Render(string(template), pact)
     fmt.Println(result)

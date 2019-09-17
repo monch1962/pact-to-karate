@@ -1,14 +1,14 @@
 Feature: Consumer '{{Consumer.Name}}' sending requests to provider '{{Provider.Name}}'
 
 {{#Interactions}}
-  Scenario: {{Description}}
+  Scenario: {{Description}} ({{{ProviderState}}})
     Given URL '{{{Request.Path}}}'
-    {{#Request.Body}}And request {{{.}}}{{/Request.Body}}
-    {{#Request.Headers}}* def reqHeaders = {{{.}}}
+    {{#Request.Body}}And request { {{#each this}}"{{@key}}":"{{this}}"{{#unless @last}}, {{/unless}}{{/each}} }{{/Request.Body}}
+    {{#Request.Headers}}* def reqHeaders = { {{#each this}}"{{@key}}":"{{this}}" {{#unless @last}}, {{/unless}}{{/each}} }
     * headers reqHeaders{{/Request.Headers}}
     When method {{Request.Method}}
     {{#Response.Status}}Then status {{.}}{{/Response.Status}}
-    {{#Response.body}}And match response == {{.}}{{/Response.body}}
+    {{#Response.body}}And match response == { {{#each this}}"{{@key}}":"{{this}}"{{#unless @last}}, {{/unless}}{{/each}} } {{/Response.body}}
 
 {{/Interactions}}
   Scenario: My second test
