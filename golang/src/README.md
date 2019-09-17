@@ -13,3 +13,7 @@ will create a tiny (~3Mb!) Docker image containing this executable
 `$ cat ../../pacts/sample-pact-extended2.v2.json | docker run -e TESTS=1 -i pact-karate:latest` will run this Docker image against the Pact JSON file, and emit executable Karate test cases
 
 `$ cat ../../pacts/sample-pact-extended2.v2.json | docker run -e STUBS=1 -i pact-karate:latest` will run this Docker image against the Pact JSON file, and emit executable Karate stubs
+
+## Mustache version (temporary)
+
+`$ cat ../../pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-stub go run main2.go`

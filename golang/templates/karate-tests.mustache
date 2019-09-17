@@ -1,0 +1,21 @@
+Feature: Consumer '{{Consumer.Name}}' sending requests to provider '{{Provider.Name}}'
+
+{{#Interactions}}
+  Scenario: {{Description}}
+    Given URL '{{{Request.Path}}}'
+    {{#Request.Body}}And request {{{.}}}{{/Request.Body}}
+    {{#Request.Headers}}* def reqHeaders = {{{.}}}
+    * headers reqHeaders{{/Request.Headers}}
+    When method {{Request.Method}}
+    {{#Response.Status}}Then status {{.}}{{/Response.Status}}
+    {{#Response.body}}And match response == {{.}}{{/Response.body}}
+
+{{/Interactions}}
+  Scenario: My second test
+    Given URL '/users/login'
+    And request {"hero":{"isthisahero":"no"},"password":"hasleftthebuilding","username":"herb"}
+    * def reqHeaders = {"Content-Type":"application/json"}
+    * headers reqHeaders
+    When method POST
+    Then status 401
+    And match response == {"status":"failed to login"}
