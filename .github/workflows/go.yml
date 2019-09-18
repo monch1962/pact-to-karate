@@ -18,7 +18,7 @@ jobs:
 
     - name: Get dependencies
       run: |
-        cd golang/src
+        # cd golang/src
         go get -v -t -d ./...
         if [ -f Gopkg.toml ]; then
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
@@ -27,12 +27,12 @@ jobs:
 
     - name: Build
       run: |
-        cd golang/src
+        # cd golang/src
         go build -v .
      
     - name: Run Go unit tests
       run: |
-        cd golang/src
+        # cd golang/src
         go test -json > test-report.out
         go test -coverprofile=coverage.out
 
