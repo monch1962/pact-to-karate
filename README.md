@@ -28,12 +28,17 @@ To generate a Karate stub, you could run e.g. `$ cat sample-pacts/sample-pact-ex
 ### To use
 
 To run interpreted version locally
+
 `$ cat sample-pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-stub go run main.go`
 
 To run compiled version locally
+
 `$ go build main.go`
+
 `$ cat sample-pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-stub ./main`
 
 To run inside Docker container
+
 `$ docker build -t pact-karate .`
+
 `$ cat sample-pacts/sample-pact-extended2.v2.json | docker run -e TEMPLATE=karate-stub -i pact-karate:latest`
