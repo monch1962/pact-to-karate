@@ -11,6 +11,7 @@ pool:
 
 steps:
   - script: |
+      go get -d -v
       go test -json > test-report.out
       go test -coverprofile=coverage.out
     displayName: "Run Golang test suite"
