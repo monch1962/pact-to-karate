@@ -1,0 +1,61 @@
+name: Go
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.12
+      uses: actions/setup-go@v1
+      with:
+        go-version: 1.12
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Get dependencies
+      run: |
+        cd golang/src
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+
+    - name: Build
+      run: |
+        cd golang/src
+        go build -v .
+     
+    - name: Run Go unit tests
+      run: |
+        cd golang/src
+        go test -json > test-report.out
+        go test -coverprofile=coverage.out
+
+    - name: Run SonarCloud checks
+      env:
+        SONARCLOUD_LOGIN: ${{ secrets.SONARCLOUD_LOGIN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        export SONAR_SCANNER_VERSION=3.3.0.1492
+        export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION
+        rm -rf $SONAR_SCANNER_HOME
+        mkdir -p $SONAR_SCANNER_HOME
+        curl -sSLo $HOME/.sonar/sonar-scanner.zip http://repo1.maven.org/maven2/org/sonarsource/scanner/cli/sonar-scanner-cli/$SONAR_SCANNER_VERSION/sonar-scanner-cli-$SONAR_SCANNER_VERSION.zip
+        unzip $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+        rm $HOME/.sonar/sonar-scanner.zip
+        export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+        export SONAR_SCANNER_OPTS="-server"
+        ~/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION/bin/sonar-scanner \
+          -Dsonar.projectKey=pact-to-karate \
+          -Dsonar.organization=monch1962-github \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=$SONARCLOUD_LOGIN \
+          -Dsonar.scm.provider=git
+
+
