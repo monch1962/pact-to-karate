@@ -1,14 +1,11 @@
 package main
 
 import (
-	// "pact"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
     "io/ioutil"
-	// "strings"
-	// "github.com/alexkappa/mustache"
     "github.com/aymerick/raymond"
 )
 
@@ -45,7 +42,6 @@ type Request struct {
 	Method        string      `json:"method"`
 	Path          string      `json:"path"`
 	Headers       interface{} `json:"headers"`
-	// Headers	[]HeaderString `json:"headers"`
 	Query         interface{} `json:"query"`
 	Body          interface{} `json:"body"`
 	MatchingRules interface{} `json:"matchingRules"`
@@ -81,7 +77,7 @@ func main() {
 	}
 	// fmt.Printf("%+v\n", pact)
 
-	templateFile := "../templates/" + os.Getenv("TEMPLATE") + ".hbs"
+	templateFile := "./templates/" + os.Getenv("TEMPLATE") + ".hbs"
 	f, err := os.Open(templateFile)
 	if err != nil {
 		log.Fatal()

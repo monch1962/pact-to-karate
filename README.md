@@ -6,49 +6,34 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=ncloc)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=security_rating)](https://sonarcloud.io/dashboard?id=pact-to-karate)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=pact-to-karate&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=pact-to-karate)
+
 # pact-to-karate
 
-Code to take Pact contracts as input and convert them to executable Karate (consumer-side) test cases & (provider-side) stubs.
-
-There are 2 versions of this code: one to run as a Golang executable (optionally within a Docker container), and another to run in a bash+jq environment
-
-## Golang version
+Code to take Pact contracts as input and convert them to executable (consumer-side) test cases & (provider-side) stubs.
 
 ### Assumptions
+
 Either you have a Go build environment to compile the executable, or a Docker environment which you can use to build a Docker image containing the Go executable
 
-### To use
-Check https://github.com/monch1962/pact-to-karate/blob/master/golang/src/README.md
+### Templates
 
-## bash+jq version
+Test case & stub generation is delivered via Handlebars templates; the various template files are stored under `./templates`. The intention is that this collection of templates will grow and evolve over time to cover a broader range of tools (e.g. Mountebank stubs, Hoverfly stubs, Node/mocha/chai test cases, ...) and you'll be able to pick and choose which languages/tools/frameworks you want to use
 
-### Assumptions
+To use one of these templates, you need to specify it via the environment variable TEMPLATE when you run either the Go code or the Docker container
 
-- your execution environment is Linux
-- you have recent version of `jq` installed
-- you have a bash shell
-- you either have access to the Internet to download `hjson`, or have `hjson` already installed
+To generate e.g. a set of Karate tests, you could run e.g. `$ cat sample-pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-tests go run main.go`
+
+To generate a Karate stub, you could run e.g. `$ cat sample-pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-stub go run main.go`
 
 ### To use
 
-Assuming your Pact contracts are available in `./pacts`...
+To run interpreted version locally
+`$ cat sample-pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-stub go run main.go`
 
----
+To run compiled version locally
+`$ go build main.go`
+`$ cat sample-pacts/sample-pact-extended2.v2.json | TEMPLATE=karate-stub ./main`
 
-Sometimes Pact contracts are presented as invalid JSON due to a bug in the Pact broker - need to fix that...
-
-First install HJSON, a tool to fix broken JSONs
-
-`$ ./get-hjson.sh`
-
-Now use it to fix the broken pacts
-
-`$ fix-broken-json pacts/*.json`
-
----
-
-Now convert your Pact contracts (with valid JSON) to Karate test cases
-
-`$ cat pacts/sample-pact-extended.v2.json | ./pact-to-karate-tests.sh`
-
-The output should be an set of executable Karate test scenarios (for testing the provider of a consumer-provider pair), in a single feature file for each Pact contract JSON
+To run inside Docker container
+`$ docker build -t pact-karate .`
+`$ cat sample-pacts/sample-pact-extended2.v2.json | docker run -e TEMPLATE=karate-stub -i pact-karate:latest`

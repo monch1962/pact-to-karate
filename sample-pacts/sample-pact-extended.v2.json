@@ -5,8 +5,7 @@
   "provider": {
     "name": "bobby"
   },
-  "interactions": [
-    {
+  "interactions": [{
       "description": "My test",
       "providerState": "User billy exists",
       "request": {
@@ -16,8 +15,8 @@
           "Content-Type": "application/json"
         },
         "body": {
-          "username":"billy",
-          "password":"issilly"
+          "username": "billy",
+          "password": "issilly"
         }
       },
       "response": {
@@ -34,15 +33,15 @@
           "Content-Type": "application/json"
         },
         "body": {
-          "username":"herb",
-          "password":"hasleftthebuilding"
+          "username": "herb",
+          "password": "hasleftthebuilding"
         }
       },
       "response": {
         "status": 401,
-	"body": {
+        "body": {
           "status": "failed to login"
-	}
+        }
       }
     }
   ],
