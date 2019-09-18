@@ -84,8 +84,13 @@ func main() {
 	}
 	defer f.Close()
 
-    raymond.RegisterHelper("toJSON", func(body string) string {
-        return string(body)
+    raymond.RegisterHelper("toJSON", func(body string, options *raymond.Options) string {
+        jsonBytes, _ := json.MarshalIndent(body,"", "  ")
+        return string(jsonBytes)
+        // var prettyJSON
+        // error := json.Indent(&prettyJSON, body, "", "\t")
+        // return string(prettyJSON.Bytes())
+        // return options.DataStr(body)
     })
 
     template, err := ioutil.ReadAll(f)
