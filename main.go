@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+    "strings"
+    // "bytes"
     "io/ioutil"
     "github.com/aymerick/raymond"
 )
@@ -84,13 +86,21 @@ func main() {
 	}
 	defer f.Close()
 
-    raymond.RegisterHelper("toJSON", func(body string, options *raymond.Options) string {
-        jsonBytes, _ := json.MarshalIndent(body,"", "  ")
+    raymond.RegisterHelper("toJSON", func(body interface{}, options *raymond.Options) string {
+        jsonBytes, _ := json.Marshal(&body)
         return string(jsonBytes)
+        // var buffer bytes.Buffer
+        // json.NewEncoder(&buffer).Encode(&body)
+        // return(buffer)
+
         // var prettyJSON
         // error := json.Indent(&prettyJSON, body, "", "\t")
         // return string(prettyJSON.Bytes())
         // return options.DataStr(body)
+    })
+
+    raymond.RegisterHelper("lowerCase", func(s string) string {
+        return string(strings.ToLower(s))
     })
 
     template, err := ioutil.ReadAll(f)

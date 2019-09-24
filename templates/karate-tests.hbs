@@ -3,7 +3,7 @@ Feature: Consumer '{{Consumer.Name}}' sending requests to provider '{{Provider.N
 {{#Interactions}}
   Scenario: {{Description}} ({{{ProviderState}}})
     Given URL '{{{Request.Path}}}'
-    {{#Request.Body}}And request { {{#each this}}"{{@key}}":"{{this}}"{{#unless @last}}, {{/unless}}{{/each}} }{{/Request.Body}}
+    And request {{{toJSON Request.Body}}}
     {{#Request.Headers}}* def reqHeaders = { {{#each this}}"{{@key}}":"{{this}}" {{#unless @last}}, {{/unless}}{{/each}} }
     * headers reqHeaders{{/Request.Headers}}
     When method {{Request.Method}}
@@ -11,11 +11,3 @@ Feature: Consumer '{{Consumer.Name}}' sending requests to provider '{{Provider.N
     {{#Response.body}}And match response == { {{#each this}}"{{@key}}":"{{this}}"{{#unless @last}}, {{/unless}}{{/each}} } {{/Response.body}}
 
 {{/Interactions}}
-  Scenario: My second test
-    Given URL '/users/login'
-    And request {"hero":{"isthisahero":"no"},"password":"hasleftthebuilding","username":"herb"}
-    * def reqHeaders = {"Content-Type":"application/json"}
-    * headers reqHeaders
-    When method POST
-    Then status 401
-    And match response == {"status":"failed to login"}
