@@ -8,6 +8,6 @@ Feature: Consumer '{{Consumer.Name}}' sending requests to provider '{{Provider.N
     * headers reqHeaders{{/Request.Headers}}
     When method {{Request.Method}}
     {{#Response.Status}}Then status {{.}}{{/Response.Status}}
-    {{#Response.body}}And match response == { {{#each this}}"{{@key}}":"{{this}}"{{#unless @last}}, {{/unless}}{{/each}} } {{/Response.body}}
+    {{#if Response.Body}}And match response == {{{toJSON Response.Body}}}{{/if}}
 
 {{/Interactions}}

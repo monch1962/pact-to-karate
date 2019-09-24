@@ -6,23 +6,16 @@ Contract.make {
 
   request {
     url "{{Request.Path}}"
-    headers {
-      {{#each Request.Headers}}"{{@key}}": "{{this}}"
-      {{/each}}
-    }
+    headers {{{toJSON Request.Headers}}}
     method {{Request.Method}}
   }
 
   response {
     status {{Response.Status}}
-    {{#Response.Headers}}headers {
-      {{#each this}}"{{@key}}": "{{this}}"
-      {{/each}}
-    }{{/Response.Headers}}
-    {{#Response.Body}} body (
-      { {{#each this}}"{{@key}}": "{{this}}"{{#unless @last}},
-      {{/unless}}{{/each}} }
-    ){{/Response.Body}}
+    headers {{{toJSON Response.Headers}}}
+    body (
+      {{{toJSON Response.Body}}}
+    )
   }
 }
 
