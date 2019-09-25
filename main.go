@@ -6,7 +6,8 @@ import (
 	"log"
 	"os"
     "strings"
-    // "bytes"
+	// "bytes"
+	"time"
     "io/ioutil"
     "github.com/aymerick/raymond"
 )
@@ -89,19 +90,19 @@ func main() {
     raymond.RegisterHelper("toJSON", func(body interface{}, options *raymond.Options) string {
         jsonBytes, _ := json.Marshal(&body)
         return string(jsonBytes)
-        // var buffer bytes.Buffer
-        // json.NewEncoder(&buffer).Encode(&body)
-        // return(buffer)
-
-        // var prettyJSON
-        // error := json.Indent(&prettyJSON, body, "", "\t")
-        // return string(prettyJSON.Bytes())
-        // return options.DataStr(body)
     })
 
     raymond.RegisterHelper("lowerCase", func(s string) string {
         return string(strings.ToLower(s))
-    })
+	})
+	
+	raymond.RegisterHelper("isoTimeRFC3339", func() string {
+		return string(time.Now().UTC().Format(time.RFC3339))
+	})
+
+	raymond.RegisterHelper("envVar", func(envvar string) string {
+		return string(os.Getenv(envvar))
+	})
 
     template, err := ioutil.ReadAll(f)
     result, err := raymond.Render(string(template), pact)

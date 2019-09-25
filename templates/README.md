@@ -17,6 +17,8 @@ Handlebars is a derivative of Mustache (http://mustache.github.io/), and has str
 We've created a couple of Handlebars helpers for transforming Pact contracts, and they're included in the main.go file. These helpers are:
 - _toJSON_ which will format supplied text in JSON format for presenting in a template. You'll generally want to use it within triple-brackets e.g. `{{{toJSON myContent}}}` to ensure that your data doesn't get HTML-escaped and `'` characters wind up being displayed as `&quot;`
 - _lowerCase_ which will convert supplied text to lowercase. In particular, we found that `GET`, `PUT`, `POST`, ... in Pact specifications often need to be convered to `get`, `put`, `post`, ... to be used in different testing frameworks, so this helper should make it easy
+- _isoTimeRFC3339_ will return an ISO RFC-3339 formatted timestamp for the current time. There's no parameters for this variable, so use it as `{{isoTimeRFC3339}}`
+- _envVar_ will return the value of a supplied environment variable. Use something like `{{{envVar "MY_VAR"}}}` to insert the value of the MY_VAR environment variable
 
 It's _highly_ likely that creating templates for different languages/frameworks will expose a need for more custom helpers over time. Please feel free to create new helpers and submit them via pull requests for inclusion in the core code repository
 
