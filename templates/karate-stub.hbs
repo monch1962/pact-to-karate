@@ -5,7 +5,7 @@ Background:
 
 {{#Interactions}}
 # {{Description}} ({{{ProviderState}}})
-Scenario: pathMatches('{{{Request.Path}}}') && methodIs('{{Request.Method}}') {{#each Request.Headers}}&& headerContains("{{@key}}": "{{this}}"){{/each}}{{#each Request.Body}} && request["{{@key}}"] == "{{{toJSON this}}}"{{/each}}
+Scenario: pathMatches('{{{Request.Path}}}') && methodIs('{{Request.Method}}'){{#each Request.Headers}} && headerContains("{{@key}}": "{{this}}"){{/each}}{{#each Request.Body}} && request["{{@key}}"] == "{{{toJSON this}}}"{{/each}}
 {{#Response.Status}}  * def responseStatus = {{.}}{{/Response.Status}}
 {{#if Response.Body}}  * def response = {{{toJSON Response.Body}}}{{/if}}
 {{#if Response.Headers}}  * def responseHeaders = {{{toJSON Response.Headers}}}{{/if}}

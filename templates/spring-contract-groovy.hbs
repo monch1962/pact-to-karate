@@ -5,7 +5,7 @@ Contract.make {
   description "{{Description}} ({{{ProviderState}}})"
 
   request {
-    url "{{Request.Path}}"
+    url "{{{Request.Path}}}"
     headers {{{toJSON Request.Headers}}}
     method {{Request.Method}}
   }

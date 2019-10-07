@@ -1,0 +1,774 @@
+{
+  "consumer": {
+    "name": "mobile-app"
+  },
+  "provider": {
+    "name": "nab-open-banking"
+  },
+  "interactions": [
+    {
+      "description": "Get FX rates",
+      "providerState": "",
+      "request": {
+        "method": "POST",
+        "path": "/v2/fxrates?v=1",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "fxRatesResponse": {
+            "fxRates": [
+              {
+                "buyCurrency": "USD",
+                "sellCurrency": "AUD",
+                "currentBuyRate": "0.76456",
+                "currentSellRate": "0.72229",
+                "previousBuyRate": "0.76456",
+                "previousSellRate": "0.72229"
+              },
+              {
+                "buyCurrency": "NZD",
+                "sellCurrency": "AUD",
+                "currentBuyRate": "0.86456",
+                "currentSellRate": "0.82229",
+                "previousBuyRate": "0.86456",
+                "previousSellRate": "0.82229"
+              }
+            ],
+            "lastUpdatedDate": "2015-12-15T15:43:00Z"
+          },
+          "status": {
+            "code": "API-200",
+            "message": "Success"
+          }
+        }
+      }
+    },
+    {
+      "description": "Get locations",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/locations?v=1&locationType=atm&startIndex=1",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "locationSearchResponse": {
+            "totalRecords": 3098,
+            "locations": [
+              {
+                "apiStructType": "type",
+                "type": {
+                  "key": "type_2A05",
+                  "description": "Blockbuster Minto"
+                }
+              }
+            ]
+          },
+          "status": {
+            "code": "API-200",
+            "message": "Success"
+          }
+        }
+      }
+    },
+    {
+      "description": "Get locations by Address",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/locations?v=1&locationType=atm&ssearchCriteria=addr&address=7030%20TAS%20Australia&startIndex=1&endIndex=10&radius=10&radiusB=1&radiusC=1",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "locationSearchResponse": {
+            "totalRecords": 6,
+            "address": {
+              "formattedAddress": "Tasmania 7030, Australia",
+              "latitude": -42.1876915,
+              "longitude": 147.0214014
+            },
+            "viewport": {
+              "swLat": -44.8826008,
+              "swLng": 144.3264921,
+              "neLat": -39.4927822,
+              "neLng": 149.7163107
+            },
+            "locations": [
+              {
+                "apiStructType": "nab",
+                "nab": {
+                  "location": "Offsite",
+                  "isDeposit": false,
+                  "isDisabilityApproved": true,
+                  "isAudio": false,
+                  "source": "NAB",
+                  "address3": "Eastlands Shopping Centre",
+                  "id": 16271,
+                  "key": "nab_3B93",
+                  "description": "Eastlands Shopping Centre",
+                  "address1": "1 Bligh Street",
+                  "suburb": "Rosny Park",
+                  "state": "TAS",
+                  "postcode": "7018",
+                  "latitude": -42.8680382,
+                  "longitude": 147.3692568,
+                  "hours": "Mon-Thu 09.00am-05.30pm, Fri 09.00am-08.00pm, Sat 09.00am-05.00pm, Sun 10.00am-04.00pm",
+                  "distanceToLocation": 80844
+                }
+              }
+            ]
+          },
+          "status": {
+            "code": "API-200",
+            "message": "Success"
+          }
+        }
+      }
+    },
+    {
+      "description": "Get locations by Geo Coordinates- basic",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/locations?v=1&locationType=abc&searchCriteria=geo&swLat=-44.9&neLat=-10.4&neLng=153.800&swLng=112.7600&startIndex=1&endIndex=1&fields=basic",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "status": {
+            "code": "API-200",
+            "message": "Success"
+          },
+          "locationSearchResponse": {
+            "totalRecords": 10,
+            "locations": [
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000967",
+                  "latitude": -34.9223588,
+                  "longitude": 138.5997032,
+                  "type": "nab"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000968",
+                  "latitude": -35.0226123,
+                  "longitude": 117.8836061,
+                  "type": "nab"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000969",
+                  "latitude": -36.0782014,
+                  "longitude": 146.9158376,
+                  "type": "nab"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000970",
+                  "latitude": -37.1918502,
+                  "longitude": 145.7103215,
+                  "type": "nab"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000971",
+                  "latitude": -37.2843362,
+                  "longitude": 142.9291397,
+                  "type": "nab"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000972",
+                  "latitude": -30.5112744,
+                  "longitude": 151.666064,
+                  "type": "nab"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "key": "nab_LOC000973",
+                  "latitude": -17.2654831,
+                  "longitude": 145.4765679,
+                  "type": "nab"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "description": "Get Location",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/location/atm_2A05?v=1",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "status": {
+            "locationDetailResponse": {
+              "apiStructType": "key",
+              "key": {
+                "bsb": "6412",
+                "siteName": "Ocean Keys Shopping Centre",
+                "isRural": false,
+                "openWeekends": true,
+                "hasCoinSwap": true,
+                "hasQuickChange": true,
+                "bbc": false,
+                "expressBusinessDeposit": false,
+                "hasIntelligentDeposit": true,
+                "foreignCurrency": false,
+                "internetBank": true,
+                "financialPlanner": false,
+                "mobileBanker": false,
+                "smallBusinessBankers": [
+                  {
+                    "name": "Joanna Gillen",
+                    "key": "157"
+                  }
+                ],
+                "id": 387956,
+                "key": "key_2A05",
+                "description": "Ocean Keys Shopping Centre",
+                "address1": "35 Ocean Keys Bvd",
+                "suburb": "Clarkson",
+                "state": "WA",
+                "postcode": "6030",
+                "latitude": -31.689555,
+                "longitude": 115.7178224,
+                "hours": "Mon-Thu 9.30am-4.00pm, Fri 9.30am-5.00pm, Sat 9.00am-12.30pm"
+              }
+            },
+            "status": {
+              "code": "API-200",
+              "message": "Success"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Get Locations by Geo Coordinates -extended",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/locations?v=1&locationType=abc&searchCriteria=geo&swLat=-44.9&neLat=-10.4&neLng=153.800&swLng=112.7600&startIndex=1&endIndex=1&fields=extended",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "locationSearchResponse": {
+            "totalRecords": 10,
+            "viewport": {
+              "swLat": -32.44781435528201,
+              "swLng": 115.37542933847658,
+              "neLat": -31.793003927751883,
+              "neLng": 116.25845546152345
+            },
+            "locations": [
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6564",
+                  "id": 12079,
+                  "key": "nab_LOC001047",
+                  "description": "Perth Agri Business",
+                  "address1": "100 St Georges Terrace",
+                  "suburb": "Perth",
+                  "state": "WA",
+                  "postcode": "6000",
+                  "latitude": -31.9549558,
+                  "longitude": 115.8574023,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6129,6133,6137",
+                  "id": 24602,
+                  "key": "nab_LOC000052",
+                  "description": "Canning Vale Business Banking Centre",
+                  "address1": "259 Bannister Rd",
+                  "suburb": "Canning Vale",
+                  "state": "WA",
+                  "postcode": "6155",
+                  "latitude": -32.0715782,
+                  "longitude": 115.893382,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6137,6130,6210",
+                  "id": 24623,
+                  "key": "nab_LOC000073",
+                  "description": "Fremantle Business Banking Centre",
+                  "address1": "88 High St",
+                  "suburb": "Fremantle",
+                  "state": "WA",
+                  "postcode": "6160",
+                  "latitude": -32.0543079,
+                  "longitude": 115.7457695,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6130",
+                  "id": 24625,
+                  "key": "nab_LOC000075",
+                  "description": "Rockingham Business Banking Centre",
+                  "address1": "10 Livingstone Rd",
+                  "suburb": "Rockingham",
+                  "state": "WA",
+                  "postcode": "6168",
+                  "latitude": -32.2867355,
+                  "longitude": 115.7405028,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6258",
+                  "id": 24655,
+                  "key": "nab_LOC000106",
+                  "description": "Malaga Business Banking Centre",
+                  "address1": "3 Exhibition Dr",
+                  "suburb": "Malaga",
+                  "state": "WA",
+                  "postcode": "6090",
+                  "latitude": -31.8511681,
+                  "longitude": 115.8812148,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6007,6017,6045,6046,6226",
+                  "id": 24674,
+                  "key": "nab_LOC000128",
+                  "description": "Perth Central Business Banking Centre",
+                  "address1": "100 St Georges Terrace",
+                  "suburb": "Perth",
+                  "state": "WA",
+                  "postcode": "6000",
+                  "latitude": -31.9549037,
+                  "longitude": 115.8572978,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6278,6279,6285",
+                  "id": 24675,
+                  "key": "nab_LOC000129",
+                  "description": "Perth East Business Banking Centre",
+                  "address1": "51 Kewdale Rd",
+                  "suburb": "Welshpool",
+                  "state": "WA",
+                  "postcode": "6106",
+                  "latitude": -31.9869995,
+                  "longitude": 115.9510084,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6310,6315,6316",
+                  "id": 24676,
+                  "key": "nab_LOC000130",
+                  "description": "Perth North Business Banking Centre",
+                  "address1": "48 Howe St",
+                  "suburb": "Osborne Park",
+                  "state": "WA",
+                  "postcode": "6017",
+                  "latitude": -31.9048412,
+                  "longitude": 115.812039,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6493,6496,6497",
+                  "id": 24677,
+                  "key": "nab_LOC000131",
+                  "description": "Perth West Business Banking Centre",
+                  "address1": "1238 Hay St",
+                  "suburb": "West Perth",
+                  "state": "WA",
+                  "postcode": "6005",
+                  "latitude": -31.9481478,
+                  "longitude": 115.8416144,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "086066",
+                  "phone": "0894419711",
+                  "id": 7445,
+                  "key": "nab_Health_centre012",
+                  "description": "Perth",
+                  "address1": "100 St Georges Terrace",
+                  "suburb": "Perth",
+                  "state": "WA",
+                  "postcode": "6000",
+                  "latitude": -31.954515,
+                  "longitude": 115.857551
+                }
+              }
+            ]
+          },
+          "status": {
+            "code": "API-200",
+            "message": "Success"
+          }
+        }
+      }
+    },
+    {
+      "description": "Get List of Accounts",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/accounts?v=1",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": {
+          "code": "API-200",
+          "message": "Success"
+        },
+        "response": {
+          "resourceType": "ACCOUNTSUMMARIES",
+          "accountSummaries": [
+            {
+              "accountType": "Mastercard",
+              "category": "DOMESTIC",
+              "nickname": "Savings",
+              "status": "CLOSED",
+              "accountLevelFlags": [
+                {
+                  "identifier": "REDRAWINDICATOR",
+                  "value": "123456"
+                },
+                {
+                  "identifier": "TRANSACTIONSOURCE",
+                  "value": "123456"
+                }
+              ],
+              "accountToken": "obFyWwLGTN2Xk8tZ_Gr40nJXn98Lez2Geppx4MOjLCOTTLBhjLsmWE_aVliknvbv",
+              "accountIdDisplay": "123456789049717432",
+              "parentRef": "F0Ic_v-YEsCTYHLnQErNuJ68T0CAiGwEfJK8KTedoMX02fFmmIxu3FKczZdkkflC",
+              "resourceType": "APCA",
+              "apca": {
+                "bsb": "1234",
+                "accountId": "12345678",
+                "accountName": "Soundar"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "description": "Get Locations by Geo Coordinates -extended",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/v2/locations?v=1&locationType=abc&searchCriteria=geo&swLat=-44.9&neLat=-10.4&neLng=153.800&swLng=112.7600&startIndex=1&endIndex=1&fields=extended",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "locationSearchResponse": {
+            "totalRecords": 10,
+            "viewport": {
+              "swLat": -32.44781435528201,
+              "swLng": 115.37542933847658,
+              "neLat": -31.793003927751883,
+              "neLng": 116.25845546152345
+            },
+            "locations": [
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6564",
+                  "id": 12079,
+                  "key": "nab_LOC001047",
+                  "description": "Perth Agri Business",
+                  "address1": "100 St Georges Terrace",
+                  "suburb": "Perth",
+                  "state": "WA",
+                  "postcode": "6000",
+                  "latitude": -31.9549558,
+                  "longitude": 115.8574023,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6129,6133,6137",
+                  "id": 24602,
+                  "key": "nab_LOC000052",
+                  "description": "Canning Vale Business Banking Centre",
+                  "address1": "259 Bannister Rd",
+                  "suburb": "Canning Vale",
+                  "state": "WA",
+                  "postcode": "6155",
+                  "latitude": -32.0715782,
+                  "longitude": 115.893382,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6137,6130,6210",
+                  "id": 24623,
+                  "key": "nab_LOC000073",
+                  "description": "Fremantle Business Banking Centre",
+                  "address1": "88 High St",
+                  "suburb": "Fremantle",
+                  "state": "WA",
+                  "postcode": "6160",
+                  "latitude": -32.0543079,
+                  "longitude": 115.7457695,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6130",
+                  "id": 24625,
+                  "key": "nab_LOC000075",
+                  "description": "Rockingham Business Banking Centre",
+                  "address1": "10 Livingstone Rd",
+                  "suburb": "Rockingham",
+                  "state": "WA",
+                  "postcode": "6168",
+                  "latitude": -32.2867355,
+                  "longitude": 115.7405028,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6258",
+                  "id": 24655,
+                  "key": "nab_LOC000106",
+                  "description": "Malaga Business Banking Centre",
+                  "address1": "3 Exhibition Dr",
+                  "suburb": "Malaga",
+                  "state": "WA",
+                  "postcode": "6090",
+                  "latitude": -31.8511681,
+                  "longitude": 115.8812148,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6007,6017,6045,6046,6226",
+                  "id": 24674,
+                  "key": "nab_LOC000128",
+                  "description": "Perth Central Business Banking Centre",
+                  "address1": "100 St Georges Terrace",
+                  "suburb": "Perth",
+                  "state": "WA",
+                  "postcode": "6000",
+                  "latitude": -31.9549037,
+                  "longitude": 115.8572978,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6278,6279,6285",
+                  "id": 24675,
+                  "key": "nab_LOC000129",
+                  "description": "Perth East Business Banking Centre",
+                  "address1": "51 Kewdale Rd",
+                  "suburb": "Welshpool",
+                  "state": "WA",
+                  "postcode": "6106",
+                  "latitude": -31.9869995,
+                  "longitude": 115.9510084,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6310,6315,6316",
+                  "id": 24676,
+                  "key": "nab_LOC000130",
+                  "description": "Perth North Business Banking Centre",
+                  "address1": "48 Howe St",
+                  "suburb": "Osborne Park",
+                  "state": "WA",
+                  "postcode": "6017",
+                  "latitude": -31.9048412,
+                  "longitude": 115.812039,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "6493,6496,6497",
+                  "id": 24677,
+                  "key": "nab_LOC000131",
+                  "description": "Perth West Business Banking Centre",
+                  "address1": "1238 Hay St",
+                  "suburb": "West Perth",
+                  "state": "WA",
+                  "postcode": "6005",
+                  "latitude": -31.9481478,
+                  "longitude": 115.8416144,
+                  "hours": "Mon-Fri 8.30am-5.30pm"
+                }
+              },
+              {
+                "apiStructType": "general",
+                "general": {
+                  "type": "nab",
+                  "bsb": "086066",
+                  "phone": "0894419711",
+                  "id": 7445,
+                  "key": "nab_Health_centre012",
+                  "description": "Perth",
+                  "address1": "100 St Georges Terrace",
+                  "suburb": "Perth",
+                  "state": "WA",
+                  "postcode": "6000",
+                  "latitude": -31.954515,
+                  "longitude": 115.857551
+                }
+              }
+            ]
+          },
+          "status": {
+            "code": "API-200",
+            "message": "Success"
+          }
+        }
+      }
+    },
+    {
+      "description": "Get Selected Account Balance",
+      "providerState": "",
+      "request": {
+        "method": "POST",
+        "path": "/v2/accounts/balance?v=1",
+        "headers": {
+          "Content-Type": "application/json",
+          "x-nab-key": "5b635f91-2132-4889-aa93-8f1231c52d00"
+        },
+        "body": ""
+      },
+      "response": {
+        "status": {
+          "code": "API-400",
+          "message": "Invalid Request"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
